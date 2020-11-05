@@ -1,0 +1,68 @@
+Map: The Sword Coast	4
+Introduction	5
+Background	5
+Overview	5
+Episode 1: Greenest in Flames	6
+	Character Hooks	6
+	The Approach	6
+	General Features	7
+	Wandering Encounters	7
+	Missions	8
+	Map: Greenest	10
+Episode 2: Raiders’ Camp	13
+	Tracking the Raiders	14
+	The Camp	16
+	Map: Raider Camp	16
+	Rewards	19
+Episode 3: Dragon Hatchery	20
+	Map: Dragon Hatchery	23
+	Rewards	27
+Episode 4: On the Road	28
+	Elturel	28
+	Baldur’s Gate	30
+	Fellow Travelers	31
+	Life on the Road	33
+	Random Road Events	33
+	Planned Road Events	37
+Episode 5: Construction Ahead	39
+	Waterdeep	39
+	Northbound, Again	40
+	Carnath Roadhouse	40
+	Map: Carnath Roadhouse	41
+	Tracking the Load	42
+	Grudge Match	42
+Episode 6: Castle Naerytar	43
+	Traveling to the Castle	43
+	Castle Naerytar	45
+	Squaring Off Against the Cult of the Dragon	48
+	Approaching Castle Naerytar	49
+	Outside Castle Naerytar	49
+	Inside Castle Naerytar	50
+	Ground Floor	50
+	Map: Castle Naerytar Ground Floor	51
+	Second Floor	54
+	Map: Castle Naerytar Level 2	55
+	Third Floor	57
+	Map: Castle Naerytar Level 3	58
+	Beneath the Castle	59
+	Map: Castle Naerytar Dungeon	60
+	Rewards	61
+Episode 7: Hunting Lodge	62
+	General Features	62
+	Castle in the Clouds	62
+	Important Nonplayer Characters	63
+	Through the Gate	63
+	Outside the Lodge	63
+	Lodge Ground Floor	65
+	Map: Hunting Lodge Ground Floor	66
+	Lodge Upper Floor	68
+	Map: Hunting Lodge Upper Floor	70
+	Traveling to Parnast	71
+Episode 8: Castle in the Clouds	72
+	Map: Parnast	73
+	Skyreach Castle	75
+	Map: Skyreach Castle	76
+	Concluding the Adventure	86
+Appendix A: Backgrounds	87
+Appendix B: Monsters	88
+Appendix C: Magic Items	94
