@@ -1,0 +1,163 @@
+entry	idx	idx_text	page
+Introduction	1	Introduction	4
+Using This Book	1.1	Introduction|Using This Book	4
+The Core Rules	1.2	Introduction|The Core Rules	5
+Ch. 1: Character Options	2	Ch. 1: Character Options	7
+Barbarian	2.1	Ch. 1: Character Options|Barbarian	8
+Primal Paths	2.1.1	Ch. 1: Character Options|Barbarian|Primal Paths	9
+Path of the Ancestral Guardian	2.1.2	Ch. 1: Character Options|Barbarian|Path of the Ancestral Guardian	9
+Path of the Storm Herald	2.1.3	Ch. 1: Character Options|Barbarian|Path of the Storm Herald	10
+Path of the Zealot	2.1.4	Ch. 1: Character Options|Barbarian|Path of the Zealot	11
+Bard	2.2	Ch. 1: Character Options|Bard	12
+Bard Colleges	2.2.1	Ch. 1: Character Options|Bard|Bard Colleges	14
+College of Glamour	2.2.2	Ch. 1: Character Options|Bard|College of Glamour	14
+College of Swords	2.2.3	Ch. 1: Character Options|Bard|College of Swords	15
+College of Whispers	2.2.4	Ch. 1: Character Options|Bard|College of Whispers	16
+Cleric	2.3	Ch. 1: Character Options|Cleric	17
+Divine Domains	2.3.1	Ch. 1: Character Options|Cleric|Divine Domains	18
+Sidebar: Serving a Pantheon; Philosophy, or Force	2.3.2	Ch. 1: Character Options|Cleric|Sidebar: Serving a Pantheon; Philosophy, or Force	18
+Forge Domain	2.3.3	Ch. 1: Character Options|Cleric|Forge Domain	18
+Grave Domain	2.3.4	Ch. 1: Character Options|Cleric|Grave Domain	19
+Druid	2.4	Ch. 1: Character Options|Druid	21
+Druid Circles	2.4.1	Ch. 1: Character Options|Druid|Druid Circles	22
+Circle of Dreams	2.4.2	Ch. 1: Character Options|Druid|Circle of Dreams	22
+Circle of the Shepherd	2.4.3	Ch. 1: Character Options|Druid|Circle of the Shepherd	23
+Learning Beast Shapes	2.4.4	Ch. 1: Character Options|Druid|Learning Beast Shapes	24
+Fighter	2.5	Ch. 1: Character Options|Fighter	27
+Martial Archetypes	2.5.1	Ch. 1: Character Options|Fighter|Martial Archetypes	28
+Arcane Archer	2.5.2	Ch. 1: Character Options|Fighter|Arcane Archer	28
+Cavalier	2.5.3	Ch. 1: Character Options|Fighter|Cavalier	30
+Samurai	2.5.4	Ch. 1: Character Options|Fighter|Samurai	31
+Monk	2.6	Ch. 1: Character Options|Monk	32
+Monastic Traditions	2.6.1	Ch. 1: Character Options|Monk|Monastic Traditions	33
+Way of the Drunken Master	2.6.2	Ch. 1: Character Options|Monk|Way of the Drunken Master	33
+Way of the Kensei	2.6.3	Ch. 1: Character Options|Monk|Way of the Kensei	34
+Way of the Sun Soul	2.6.4	Ch. 1: Character Options|Monk|Way of the Sun Soul	35
+Paladin	2.7	Ch. 1: Character Options|Paladin	36
+Sacred Oaths	2.7.1	Ch. 1: Character Options|Paladin|Sacred Oaths	37
+Oath of Conquest	2.7.2	Ch. 1: Character Options|Paladin|Oath of Conquest	37
+Oath of Redemption	2.7.3	Ch. 1: Character Options|Paladin|Oath of Redemption	38
+Ranger	2.8	Ch. 1: Character Options|Ranger	40
+Ranger Archetypes	2.8.1	Ch. 1: Character Options|Ranger|Ranger Archetypes	41
+Gloom Stalker	2.8.2	Ch. 1: Character Options|Ranger|Gloom Stalker	41
+Horizon Walker	2.8.3	Ch. 1: Character Options|Ranger|Horizon Walker	42
+Monster Slayer	2.8.4	Ch. 1: Character Options|Ranger|Monster Slayer	43
+Rogue	2.9	Ch. 1: Character Options|Rogue	44
+Roguish Archetypes	2.9.1	Ch. 1: Character Options|Rogue|Roguish Archetypes	45
+Inquisitive	2.9.2	Ch. 1: Character Options|Rogue|Inquisitive	45
+Mastermind	2.9.3	Ch. 1: Character Options|Rogue|Mastermind	46
+Scout	2.9.4	Ch. 1: Character Options|Rogue|Scout	47
+Swashbuckler	2.9.5	Ch. 1: Character Options|Rogue|Swashbuckler	47
+Sorcerer	2.10	Ch. 1: Character Options|Sorcerer	48
+Sorcerous Origins	2.10.1	Ch. 1: Character Options|Sorcerer|Sorcerous Origins	50
+Divine Soul...	2.10.2	Ch. 1: Character Options|Sorcerer|Divine Soul...	50
+Shadow Magic	2.10.3	Ch. 1: Character Options|Sorcerer|Shadow Magic	50
+Storm Sorcery	2.10.4	Ch. 1: Character Options|Sorcerer|Storm Sorcery	51
+Warlock	2.11	Ch. 1: Character Options|Warlock	53
+Otherworldly Patrons	2.11.1	Ch. 1: Character Options|Warlock|Otherworldly Patrons	54
+The Celestial	2.11.2	Ch. 1: Character Options|Warlock|The Celestial	54
+The Hexblade	2.11.3	Ch. 1: Character Options|Warlock|The Hexblade	55
+Eldritch Invocations	2.11.4	Ch. 1: Character Options|Warlock|Eldritch Invocations	56
+Wizard	2.12	Ch. 1: Character Options|Wizard	58
+Arcane Tradition	2.12.1	Ch. 1: Character Options|Wizard|Arcane Tradition	59
+War Magic	2.12.2	Ch. 1: Character Options|Wizard|War Magic	59
+This Is Your Life	2.13	Ch. 1: Character Options|This Is Your Life	61
+Origins	2.13.1	Ch. 1: Character Options|This Is Your Life|Origins	61
+Personal Decisions	2.13.2	Ch. 1: Character Options|This Is Your Life|Personal Decisions	64
+Life Events	2.13.3	Ch. 1: Character Options|This Is Your Life|Life Events	69
+Supplemental Tables	2.13.4	Ch. 1: Character Options|This Is Your Life|Supplemental Tables	72
+Racial Feats	2.14	Ch. 1: Character Options|Racial Feats	73
+Ch. 2: Dungeon Master's Tools	3	Ch. 2: Dungeon Master's Tools	77
+Simultaneous Effects	3.1	Ch. 2: Dungeon Master's Tools|Simultaneous Effects	77
+Falling	3.2	Ch. 2: Dungeon Master's Tools|Falling	77
+Rate of Falling	3.2.1	Ch. 2: Dungeon Master's Tools|Falling|Rate of Falling	77
+Flying Creatures and Falling	3.2.2	Ch. 2: Dungeon Master's Tools|Falling|Flying Creatures and Falling	77
+Sleep	3.3	Ch. 2: Dungeon Master's Tools|Sleep	77
+Waking Someone	3.3.1	Ch. 2: Dungeon Master's Tools|Sleep|Waking Someone	77
+Sleeping in Armor	3.3.2	Ch. 2: Dungeon Master's Tools|Sleep|Sleeping in Armor	77
+Going without a Long Rest	3.3.3	Ch. 2: Dungeon Master's Tools|Sleep|Going without a Long Rest	78
+Adamantine Weapons	3.4	Ch. 2: Dungeon Master's Tools|Adamantine Weapons	78
+Tying Knots	3.5	Ch. 2: Dungeon Master's Tools|Tying Knots	78
+Tool Proficiencies	3.6	Ch. 2: Dungeon Master's Tools|Tool Proficiencies	78
+Tools and Skills Together	3.6.1	Ch. 2: Dungeon Master's Tools|Tool Proficiencies|Tools and Skills Together	78
+Tool Descriptions	3.6.2	Ch. 2: Dungeon Master's Tools|Tool Proficiencies|Tool Descriptions	78
+Spellcasting	3.7	Ch. 2: Dungeon Master's Tools|Spellcasting	85
+Perceiving a Caster at Work	3.7.1	Ch. 2: Dungeon Master's Tools|Spellcasting|Perceiving a Caster at Work	85
+Identifying a Spell	3.7.2	Ch. 2: Dungeon Master's Tools|Spellcasting|Identifying a Spell	85
+Invalid Spell Targets	3.7.3	Ch. 2: Dungeon Master's Tools|Spellcasting|Invalid Spell Targets	85
+Areas of Effect on a Grid	3.7.4	Ch. 2: Dungeon Master's Tools|Spellcasting|Areas of Effect on a Grid	86
+Encounter Building	3.8	Ch. 2: Dungeon Master's Tools|Encounter Building	88
+Quick Matchups	3.8.1	Ch. 2: Dungeon Master's Tools|Encounter Building|Quick Matchups	91
+Random Encounters: A World of Possibilities	3.9	Ch. 2: Dungeon Master's Tools|Random Encounters: A World of Possibilities	92
+Arctic Encounters	3.9.1	Ch. 2: Dungeon Master's Tools|Random Encounters: A World of Possibilities|Arctic Encounters	92
+Coastal Encounters	3.9.2	Ch. 2: Dungeon Master's Tools|Random Encounters: A World of Possibilities|Coastal Encounters	93
+Desert Encounters	3.9.3	Ch. 2: Dungeon Master's Tools|Random Encounters: A World of Possibilities|Desert Encounters	95
+Forest Encounters	3.9.4	Ch. 2: Dungeon Master's Tools|Random Encounters: A World of Possibilities|Forest Encounters	97
+Grassland Encounters	3.9.5	Ch. 2: Dungeon Master's Tools|Random Encounters: A World of Possibilities|Grassland Encounters	100
+Hill Encounters	3.9.6	Ch. 2: Dungeon Master's Tools|Random Encounters: A World of Possibilities|Hill Encounters	101
+Mountain Encounters	3.9.7	Ch. 2: Dungeon Master's Tools|Random Encounters: A World of Possibilities|Mountain Encounters	104
+Swamp Encounters	3.9.8	Ch. 2: Dungeon Master's Tools|Random Encounters: A World of Possibilities|Swamp Encounters	105
+Underdark Encounters	3.9.9	Ch. 2: Dungeon Master's Tools|Random Encounters: A World of Possibilities|Underdark Encounters	106
+Underwater Encounters	3.9.10	Ch. 2: Dungeon Master's Tools|Random Encounters: A World of Possibilities|Underwater Encounters	109
+Urban Encounters	3.9.11	Ch. 2: Dungeon Master's Tools|Random Encounters: A World of Possibilities|Urban Encounters	110
+Traps Revisited	3.10	Ch. 2: Dungeon Master's Tools|Traps Revisited	113
+Simple Traps	3.10.1	Ch. 2: Dungeon Master's Tools|Traps Revisited|Simple Traps	113
+Sidebar: Making Traps Meaningful	3.10.2	Ch. 2: Dungeon Master's Tools|Traps Revisited|Sidebar: Making Traps Meaningful	114
+Designing Simple Traps	3.10.3	Ch. 2: Dungeon Master's Tools|Traps Revisited|Designing Simple Traps	115
+Complex Traps	3.10.4	Ch. 2: Dungeon Master's Tools|Traps Revisited|Complex Traps	118
+Designing Complex Traps	3.10.5	Ch. 2: Dungeon Master's Tools|Traps Revisited|Designing Complex Traps	121
+Sidebar: Complex Traps and Legendary Monsters	3.10.6	Ch. 2: Dungeon Master's Tools|Traps Revisited|Sidebar: Complex Traps and Legendary Monsters	123
+Downtime Revisited	3.11	Ch. 2: Dungeon Master's Tools|Downtime Revisited	123
+Rivals	3.11.1	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Rivals	123
+Downtime Activities	3.11.2	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities	125
+Buying a Magic Item	3.11.2.1	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities|Buying a Magic Item	126
+Carousing	3.11.2.2	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities|Carousing	127
+Crafting an Item	3.11.2.3	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities|Crafting an Item	128
+Crime	3.11.2.4	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities|Crime	130
+Gambling	3.11.2.5	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities|Gambling	130
+Pit Fighting	3.11.2.6	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities|Pit Fighting	131
+Relaxation	3.11.2.7	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities|Relaxation	131
+Religious Service	3.11.2.8	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities|Religious Service	131
+Research	3.11.2.9	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities|Research	132
+Scribing a Spell Scroll	3.11.2.10	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities|Scribing a Spell Scroll	133
+Selling a Magic Item	3.11.2.11	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities|Selling a Magic Item	133
+Training	3.11.2.12	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities|Training	134
+Work	3.11.2.13	Ch. 2: Dungeon Master's Tools|Downtime Revisited|Downtime Activities|Work	134
+Awarding Magic Items	3.12	Ch. 2: Dungeon Master's Tools|Awarding Magic Items	135
+Sidebar: Behind the Design: Magic Item Distribution	3.12.1	Ch. 2: Dungeon Master's Tools|Awarding Magic Items|Sidebar: Behind the Design: Magic Item Distribution	135
+Common Magic Items	3.12.2	Ch. 2: Dungeon Master's Tools|Awarding Magic Items|Common Magic Items	136
+Sidebar: Are Magic Items Necessary in a Campaign?	3.12.3	Ch. 2: Dungeon Master's Tools|Awarding Magic Items|Sidebar: Are Magic Items Necessary in a Campaign?	136
+Sidebar: Creating Additional Common Items	3.12.4	Ch. 2: Dungeon Master's Tools|Awarding Magic Items|Sidebar: Creating Additional Common Items	140
+Magic Item Tables	3.12.5	Ch. 2: Dungeon Master's Tools|Awarding Magic Items|Magic Item Tables	140
+Sidebar: Recharging without a Dawn	3.12.6	Ch. 2: Dungeon Master's Tools|Awarding Magic Items|Sidebar: Recharging without a Dawn	144
+Ch. 3: Spells	4	Ch. 3: Spells	147
+Spell Lists	4.1	Ch. 3: Spells|Spell Lists	147
+Spell Descriptions	4.2	Ch. 3: Spells|Spell Descriptions	150
+App. A: Shared Campaigns	5	App. A: Shared Campaigns	172
+App. B: Character Names	6	App. B: Character Names	175
+Nonhuman Names	6.1	App. B: Character Names|Nonhuman Names	175
+Dragonborn	6.1.1	App. B: Character Names|Nonhuman Names|Dragonborn	175
+Dwarf	6.1.2	App. B: Character Names|Nonhuman Names|Dwarf	176
+Elf	6.1.3	App. B: Character Names|Nonhuman Names|Elf	176
+Gnome	6.1.4	App. B: Character Names|Nonhuman Names|Gnome	178
+Halfling	6.1.5	App. B: Character Names|Nonhuman Names|Halfling	179
+Half-Orc	6.1.6	App. B: Character Names|Nonhuman Names|Half-Orc	179
+Tiefling	6.1.7	App. B: Character Names|Nonhuman Names|Tiefling	180
+Human Names	6.2	App. B: Character Names|Human Names	181
+Arabic	6.2.1	App. B: Character Names|Human Names|Arabic	181
+Celtic	6.2.2	App. B: Character Names|Human Names|Celtic	182
+Chinese	6.2.3	App. B: Character Names|Human Names|Chinese	182
+Egyptian	6.2.4	App. B: Character Names|Human Names|Egyptian	183
+English	6.2.5	App. B: Character Names|Human Names|English	184
+French	6.2.6	App. B: Character Names|Human Names|French	185
+German	6.2.7	App. B: Character Names|Human Names|German	185
+Greek	6.2.8	App. B: Character Names|Human Names|Greek	186
+Indian	6.2.9	App. B: Character Names|Human Names|Indian	186
+Japanese	6.2.10	App. B: Character Names|Human Names|Japanese	187
+Mesoamerican	6.2.11	App. B: Character Names|Human Names|Mesoamerican	188
+Niger-Congo	6.2.12	App. B: Character Names|Human Names|Niger-Congo	189
+Norse	6.2.13	App. B: Character Names|Human Names|Norse	189
+Polynesian	6.2.14	App. B: Character Names|Human Names|Polynesian	190
+Roman	6.2.15	App. B: Character Names|Human Names|Roman	190
+Slavic	6.2.16	App. B: Character Names|Human Names|Slavic	191
+Spanish	6.2.17	App. B: Character Names|Human Names|Spanish	192

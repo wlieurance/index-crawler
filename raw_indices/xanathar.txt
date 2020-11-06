@@ -1,0 +1,162 @@
+Introduction, 4
+	Using This Book, 4
+	The Core Rules, 5
+Character Options, 7
+	Barbarian, 8
+		Primal Paths, 9
+		Path of the Ancestral Guardian, 9
+		Path of the Storm Herald, 10
+		Path of the Zealot, 11
+	Bard, 12
+		Bard Colleges, 14
+		College of Glamour, 14
+		College of Swords, 15
+		College of Whispers, 16
+	Cleric, 17
+		Divine Domains, 18
+		Sidebar: Serving a Pantheon; Philosophy, or Force, 18
+		Forge Domain, 18
+		Grave Domain, 19
+	Druid, 21
+		Druid Circles, 22
+		Circle of Dreams, 22
+		Circle of the Shepherd, 23
+		Learning Beast Shapes, 24
+	Fighter, 27
+		Martial Archetypes, 28
+		Arcane Archer, 28
+		Cavalier, 30
+		Samurai, 31
+	Monk, 32
+		Monastic Traditions, 33
+		Way of the Drunken Master, 33
+		Way of the Kensei, 34
+		Way of the Sun Soul, 35
+	Paladin, 36
+		Sacred Oaths, 37
+		Oath of Conquest, 37
+		Oath of Redemption, 38
+	Ranger, 40
+		Ranger Archetypes, 41
+		Gloom Stalker, 41
+		Horizon Walker, 42
+		Monster Slayer, 43
+	Rogue, 44
+		Roguish Archetypes, 45
+		Inquisitive, 45
+		Mastermind, 46
+		Scout, 47
+		Swashbuckler, 47
+	Sorcerer, 48
+		Sorcerous Origins, 50
+		Divine Soul..., 50
+		Shadow Magic, 50
+		Storm Sorcery, 51
+	Warlock, 53
+		Otherworldly Patrons, 54
+		The Celestial, 54
+		The Hexblade, 55
+		Eldritch Invocations, 56
+	Wizard, 58
+		Arcane Tradition, 59
+		War Magic, 59
+	This Is Your Life, 61
+		Origins, 61
+		Personal Decisions, 64
+		Life Events, 69
+		Supplemental Tables, 72
+	Racial Feats, 73
+Dungeon Master's Tools, 77
+	Simultaneous Effects, 77
+	Falling, 77
+		Rate of Falling, 77
+		Flying Creatures and Falling, 77
+	Sleep, 77
+		Waking Someone, 77
+		Sleeping in Armor, 77
+		Going without a Long Rest, 78
+	Adamantine Weapons, 78
+	Tying Knots, 78
+	Tool Proficiencies, 78
+		Tools and Skills Together, 78
+		Tool Descriptions, 78
+	Spellcasting, 85
+		Perceiving a Caster at Work, 85
+		Identifying a Spell, 85
+		Invalid Spell Targets, 85
+		Areas of Effect on a Grid, 86
+	Encounter Building, 88
+		Quick Matchups, 91
+	Random Encounters: A World of Possibilities, 92
+		Arctic Encounters, 92
+		Coastal Encounters, 93
+		Desert Encounters, 95
+		Forest Encounters, 97
+		Grassland Encounters, 100
+		Hill Encounters, 101
+		Mountain Encounters, 104
+		Swamp Encounters, 105
+		Underdark Encounters, 106
+		Underwater Encounters, 109
+		Urban Encounters, 110
+	Traps Revisited, 113
+		Simple Traps, 113
+		Sidebar: Making Traps Meaningful, 114
+		Designing Simple Traps, 115
+		Complex Traps, 118
+		Designing Complex Traps, 121
+		Sidebar: Complex Traps and Legendary Monsters, 123
+	Downtime Revisited, 123
+		Rivals, 123
+		Downtime Activities, 125
+			Buying a Magic Item, 126
+			Carousing, 127
+			Crafting an Item, 128
+			Crime, 130
+			Gambling, 130
+			Pit Fighting, 131
+			Relaxation, 131
+			Religious Service, 131
+			Research, 132
+			Scribing a Spell Scroll, 133
+			Selling a Magic Item, 133
+			Training, 134
+			Work, 134
+	Awarding Magic Items, 135
+		Sidebar: Behind the Design: Magic Item Distribution, 135
+		Common Magic Items, 136
+		Sidebar: Are Magic Items Necessary in a Campaign?, 136
+		Sidebar: Creating Additional Common Items, 140
+		Magic Item Tables, 140
+		Sidebar: Recharging without a Dawn, 144
+Spells, 147
+	Spell Lists, 147
+	Spell Descriptions, 150
+Shared Campaigns, 172
+Character Names, 175
+	Nonhuman Names, 175
+		Dragonborn, 175
+		Dwarf, 176
+		Elf, 176
+		Gnome, 178
+		Halfling, 179
+		Half-Orc, 179
+		Tiefling, 180
+	Human Names, 181
+		Arabic, 181
+		Celtic, 182
+		Chinese, 182
+		Egyptian, 183
+		English, 184
+		French, 185
+		German, 185
+		Greek, 186
+		Indian, 186
+		Japanese, 187
+		Mesoamerican, 188
+		Niger-Congo, 189
+		Norse, 189
+		Polynesian, 190
+		Roman, 190
+		Slavic, 191
+		Spanish, 192
