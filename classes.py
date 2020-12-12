@@ -105,7 +105,13 @@ class Index:
                 p = matches.group('p')
 
                 # test if line is just a 'See also note'
-                if not text and not p and note[:3].lower() == 'see':
+                if not text and not note and not p:
+                    continue
+                elif not text and not note:
+                    p_list = [x for x in [outlist[-1]['p'], note] if x]
+                    p_string = '; '.join(p_list)
+                    outlist[-1]['p'] = p_string
+                elif not text and note[:3].lower() == 'see':
                     note_list = [x for x in [outlist[-1]['note'], note] if x]
                     note_string = '; '.join(note_list)
                     outlist[-1]['note'] = note_string
@@ -231,7 +237,5 @@ class Index:
         con.commit()
         con.close()
         return {'pub_rows': pub_rows, 'index_rows': index_rows}
-
-
 
 

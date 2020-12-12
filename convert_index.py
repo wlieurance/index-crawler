@@ -50,10 +50,11 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    my_index = Index(path=args.path, delimiter=args.index_delimter, version=args.version, author=args.author,
-                     title=args.title, publisher=args.publisher, year=args.year, volume=args.volume,
-                     series=args.series, address=args.address, edition=args.edition, month=args.month, note=args.note,
-                     isbn=args.isbn)
+    my_index = Index(path=args.path, dbpath=args.out_file, delimiter=args.index_delimiter, pubkey=args.pubkey,
+                     abbr=args.abbr, link=args.link, adjust=args.page_adjust, conflict=args.conflict,
+                     version=args.version, author=args.version, title=args.title, publisher=args.publisher,
+                     year=args.year, volume=args.volume, series=args.series, address=args.address, edition=args.edition,
+                     month=args.month, note=args.note, isbn=args.isbn)
     my_index.text_to_dict()
     if os.path.splitext(args.out_file)[1] == '.json':
         my_index.dict_to_tree()
@@ -61,8 +62,8 @@ if __name__ == "__main__":
             json.dump(my_index.tree_index, file, ensure_ascii=False, indent=4)
     elif os.path.splitext(args.out_file)[1] in ['.db', '.sqlite']:
         rows = my_index.dict_to_db()
-        print(rows['pub_rows'], 'rows inserted into table dnd_pub')
-        print(rows['index_rows'], 'rows inserted into table dnd_index')
+        print(rows['pub_rows'], 'rows inserted into table pub')
+        print(rows['index_rows'], 'rows inserted into table indices')
     else:
         my_index.dict_to_df()
         my_index.df_index.to_csv(args.out_file, sep=args.delim, index=False)
