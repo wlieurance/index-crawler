@@ -38,7 +38,7 @@ specific info on how to get Tkinter on your system if importing fails.
 
 ## Contributing
 
-Please read CONTRIBUTING.md for more info.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for more info.
 
 ## Versioning
 
@@ -48,4 +48,4 @@ Please read CONTRIBUTING.md for more info.
 
 ## License
 
-This project is licensed under the GNU GPL v3 License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the GNU GPL v3 License - see the [LICENSE](LICENSE) file for details.
