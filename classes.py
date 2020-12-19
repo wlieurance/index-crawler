@@ -6,6 +6,7 @@ import os
 
 # ExportForm
 # separate imports needed due to tkinter idiosyncrasies
+import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
 # from tkinter import filedialog, messagebox
@@ -254,9 +255,11 @@ class ExportForm:
         # self.cframe = Frame(self.master)
         # self.cframe.grid(row=0, column=0, sticky='nsew')
 
+        self.valuePub = []
         self.valueIndex = []
         self.valueEntry = []
         self.valuePages = []
+        self.sv_pub = StringVar()
         self.sv_idx = StringVar()
         self.sv_ent = StringVar()
 
@@ -275,74 +278,169 @@ class ExportForm:
         self.style = Style()
         self.style.configure("TButton", padding=6, relief="flat", background="#ccc", width=20)
 
-        self.txtIndex = Entry(self.master, textvariable=self.sv_idx, width=40)
-        self.txtIndex.grid(row=0, column=0, sticky='ew')
+        # list boxes
+        self.lblPub = tk.Label(self.master, text='Indices', fg='blue')
+        self.lblPub.grid(row=0, column=0, sticky='w')
+        self.txtPub = tk.Entry(self.master, textvariable=self.sv_pub, width=40)
+        self.txtPub.grid(row=1, column=0, sticky='ew')
+        # self.txtPub.config(fg='gray')
+        # self.txtPub.insert(0, "Search indices...")
 
-        self.txtEntry = Entry(self.master, textvariable=self.sv_ent, width=30)
-        self.txtEntry.grid(row=0, column=2, sticky='ew')
+        self.lblIndex = tk.Label(self.master, text='Entry paths', fg='blue')
+        self.lblIndex.grid(row=0, column=2, sticky='w')
+        self.txtIndex = tk.Entry(self.master, textvariable=self.sv_idx, width=40)
+        self.txtIndex.grid(row=1, column=2, sticky='ew')
+        # self.txtIndex.config(fg='gray')
+        # self.txtIndex.insert(0, "Search index paths...")
+
+        self.lblEntry = tk.Label(self.master, text='Entries', fg='blue')
+        self.lblEntry.grid(row=0, column=4, sticky='w')
+        self.txtEntry = tk.Entry(self.master, textvariable=self.sv_ent, width=30)
+        self.txtEntry.grid(row=1, column=4, sticky='ew')
+        # self.txtEntry.config(fg='gray')
+        # self.txtEntry.insert(0, "Search entries...")
+
+        self.lblPages = tk.Label(self.master, text='Select page', fg='blue')
+        self.lblPages.grid(row=1, column=6, sticky='w')
+
+        self.lstPub = Listbox(self.master, selectmode=EXTENDED, exportselection=0, width=40)
+        self.lstPub.grid(row=2, column=0, sticky='nsew')
 
         self.lstIndex = Listbox(self.master, selectmode=EXTENDED, exportselection=0, width=40)
-        self.lstIndex.grid(row=1, column=0, sticky='nsew')
+        self.lstIndex.grid(row=2, column=2, sticky='nsew')
 
         self.lstEntry = Listbox(self.master, selectmode=EXTENDED, exportselection=0, width=30)
-        self.lstEntry.grid(row=1, column=2, sticky='nsew')
+        self.lstEntry.grid(row=2, column=4, sticky='nsew')
 
         self.lstPages = Listbox(self.master, selectmode=SINGLE, exportselection=0, width=20)
-        self.lstPages.grid(row=1, column=4, sticky='nsew')
+        self.lstPages.grid(row=2, column=6, sticky='nsew')
+
+        # buttons
+        self.btnSelectAll_pub = Button(self.master, width=10, text='Select All', style="TButton",
+                                           command=self.selectall_pub)
+        self.btnSelectAll_pub.grid(row=4, column=0, sticky='w')
 
         self.btnSelectAll_idx = Button(self.master, width=10, text='Select All', style="TButton",
                                            command=self.selectall_idx)
-        self.btnSelectAll_idx.grid(row=3, column=0, sticky='w')
+        self.btnSelectAll_idx.grid(row=4, column=2, sticky='w')
 
         self.btnSelectAll_entry = Button(self.master, width=10, text='Select All', style="TButton",
                                              command=self.selectall_ent)
-        self.btnSelectAll_entry.grid(row=3, column=2, sticky='w')
+        self.btnSelectAll_entry.grid(row=4, column=4, sticky='w')
+
+        self.btnClearAll_pub = Button(self.master, width=10, text='Clear All', style="TButton",
+                                          command=self.clearall_pub)
+        self.btnClearAll_pub.grid(row=4, column=0, sticky='e')
 
         self.btnClearAll_idx = Button(self.master, width=10, text='Clear All', style="TButton",
                                           command=self.clearall_idx)
-        self.btnClearAll_idx.grid(row=3, column=0, sticky='e')
+        self.btnClearAll_idx.grid(row=4, column=2, sticky='e')
 
         self.btnClearAll_entry = Button(self.master, width=10, text='Clear All', style="TButton",
                                             command=self.clearall_ent)
-        self.btnClearAll_entry.grid(row=3, column=2, sticky='e')
+        self.btnClearAll_entry.grid(row=4, column=4, sticky='e')
 
         # self.btnGrab = Button(self.master, width=20, text='Export', style="TButton", command=self.grab)
         # self.btnGrab.grid(row=3, column=4, sticky='w')
 
+        # scrollbars
+        # Publication listbox
+        self.scrollbar_pub_v = Scrollbar(self.master, orient=VERTICAL)
+        self.lstPub.config(yscrollcommand=self.scrollbar_pub_v.set)
+        self.scrollbar_pub_v.config(command=self.lstPub.yview)
+        self.scrollbar_pub_v.grid(row=2, column=1, sticky='ns')
+        self.scrollbar_pub_h = Scrollbar(self.master, orient=HORIZONTAL)
+        self.lstIndex.config(xscrollcommand=self.scrollbar_pub_h.set)
+        self.scrollbar_pub_h.config(command=self.lstPub.xview)
+        self.scrollbar_pub_h.grid(row=3, column=0, sticky='ew')
+
+        # Index listbox
         self.scrollbar_idx_v = Scrollbar(self.master, orient=VERTICAL)
         self.lstIndex.config(yscrollcommand=self.scrollbar_idx_v.set)
         self.scrollbar_idx_v.config(command=self.lstIndex.yview)
-        self.scrollbar_idx_v.grid(row=1, column=1, sticky='ns')
+        self.scrollbar_idx_v.grid(row=2, column=3, sticky='ns')
         self.scrollbar_idx_h = Scrollbar(self.master, orient=HORIZONTAL)
         self.lstIndex.config(xscrollcommand=self.scrollbar_idx_h.set)
         self.scrollbar_idx_h.config(command=self.lstIndex.xview)
-        self.scrollbar_idx_h.grid(row=2, column=0, sticky='ew')
+        self.scrollbar_idx_h.grid(row=3, column=2, sticky='ew')
 
+        # Entry listbox
         self.scrollbar_ent_v = Scrollbar(self.master, orient=VERTICAL)
         self.lstEntry.config(yscrollcommand=self.scrollbar_ent_v.set)
         self.scrollbar_ent_v.config(command=self.lstEntry.yview)
-        self.scrollbar_ent_v.grid(row=1, column=3, sticky='ns')
+        self.scrollbar_ent_v.grid(row=2, column=5, sticky='ns')
         self.scrollbar_ent_h = Scrollbar(self.master, orient=HORIZONTAL)
         self.lstEntry.config(xscrollcommand=self.scrollbar_ent_h.set)
         self.scrollbar_ent_h.config(command=self.lstEntry.xview)
-        self.scrollbar_ent_h.grid(row=2, column=2, sticky='ew')
+        self.scrollbar_ent_h.grid(row=3, column=4, sticky='ew')
 
-        # set weights for resize
-        self.master.grid_columnconfigure(0, weight=4)
+        # Pages listbox
+        self.scrollbar_pgs_v = Scrollbar(self.master, orient=VERTICAL)
+        self.lstPages.config(yscrollcommand=self.scrollbar_pgs_v.set)
+        self.scrollbar_pgs_v.config(command=self.lstPages.yview)
+        self.scrollbar_pgs_v.grid(row=2, column=7, sticky='ns')
+        self.scrollbar_pgs_h = Scrollbar(self.master, orient=HORIZONTAL)
+        self.lstPages.config(xscrollcommand=self.scrollbar_pgs_h.set)
+        self.scrollbar_pgs_h.config(command=self.lstPages.xview)
+        self.scrollbar_pgs_h.grid(row=3, column=6, sticky='ew')
+
+        # set weights for window resize
+        self.master.grid_columnconfigure(0, weight=1)
         self.master.grid_columnconfigure(1, weight=0)
         self.master.grid_columnconfigure(2, weight=4)
         self.master.grid_columnconfigure(3, weight=0)
-        self.master.grid_columnconfigure(4, weight=1)
+        self.master.grid_columnconfigure(4, weight=4)
+        self.master.grid_columnconfigure(5, weight=0)
+        self.master.grid_columnconfigure(6, weight=1)
+        self.master.grid_columnconfigure(7, weight=0)
         self.master.grid_rowconfigure(0, weight=0)
-        self.master.grid_rowconfigure(1, weight=4)
-        self.master.grid_rowconfigure(2, weight=0)
+        self.master.grid_rowconfigure(1, weight=0)
+        self.master.grid_rowconfigure(2, weight=4)
         self.master.grid_rowconfigure(3, weight=0)
+        self.master.grid_rowconfigure(4, weight=0)
 
-        result = conn.execute("SELECT idx_text FROM indices WHERE page IS NOT NULL "
-                              "GROUP BY idx_text, idx ORDER BY idx_text, idx;")
-        for row in result:
-            # print(row)
-            self.lstIndex.insert(END, row[0])
+        pub_result = conn.execute("SELECT b.title || ' (' || a.version || ')' "
+                                  "FROM indices as a "
+                                  "INNER JOIN pub AS b ON a.pubkey = b.pubkey "
+                                  "WHERE a.page IS NOT NULL "
+                                  "GROUP BY b.title, a.version ORDER BY b.title, a.version;")
+        for row in pub_result:
+            self.lstPub.insert(END, row[0])
+
+        # self.btnSelectAll_pub.invoke()
+        # idx_result = conn.execute("SELECT idx_text FROM indices WHERE page IS NOT NULL "
+        #                           "GROUP BY idx_text, idx ORDER BY idx_text, idx;")
+        # for row in idx_result:
+        #     # print(row)
+        #     self.lstIndex.insert(END, row[0])
+
+        # functions to define what happens on listbox select
+        def onselect_Pub(evt):
+            self.lstIndex.delete(0, END)
+            self.lstEntry.delete(0, END)
+            self.lstPages.delete(0, END)
+            w = evt.widget
+            c = w.curselection()
+            value = []
+            li = len(c)
+            for i in range(0, li):
+                value.append(w.get(c[i]))
+            # print(value)
+            self.valuePub = value
+            s = ("SELECT idx_text FROM indices AS a "
+                 "INNER JOIN pub AS b ON a.pubkey = b.pubkey "
+                 "WHERE b.title || ' (' || a.version || ')' IN ({!s}) "
+                 "AND a.page IS NOT NULL "
+                 "GROUP BY a.idx_text ORDER BY a.idx_text;"
+                 .format(','.join('?' * len(self.valuePub))))
+            result = conn.execute(s, self.valuePub)
+            count = 0
+            for row in result:
+                count += 1
+                self.lstIndex.insert(END, row[0])
+            if count == 1:
+                self.lstIndex.selection_set(0)
+                self.lstIndex.event_generate("<<ListboxSelect>>")
 
         def onselect_Index(evt):
             self.lstEntry.delete(0, END)
@@ -355,9 +453,15 @@ class ExportForm:
                 value.append(w.get(c[i]))
             # print(value)
             self.valueIndex = value
-            s = ("SELECT entry FROM indices WHERE idx_text IN ({!s}) "
-                 "GROUP BY entry ORDER BY idx_text, idx;".format(','.join('?' * len(self.valueIndex))))
-            result = conn.execute(s, self.valueIndex)
+            s = ("SELECT a.entry "
+                 "  FROM indices AS a "
+                 " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
+                 " WHERE a.idx_text IN ({!s}) "
+                 "AND b.title || ' (' || a.version || ')' IN ({!s}) "
+                 "AND a.page IS NOT NULL "
+                 "GROUP BY a.entry ORDER BY a.idx_text, a.idx;"
+                 .format(','.join('?' * len(self.valueIndex)), ','.join('?' * len(self.valuePub))))
+            result = conn.execute(s, self.valueIndex + self.valuePub)
             count = 0
             for row in result:
                 count += 1
@@ -376,10 +480,17 @@ class ExportForm:
                 value.append(w.get(c[i]))
             # print(value)
             self.valueEntry = value
-            s = ("SELECT pubkey, page FROM indices WHERE entry IN ({!s}) "
-                 "AND idx_text IN ({!s}) GROUP BY pubkey, page ORDER BY pubkey, page;"
-                 .format(','.join('?' * len(self.valueEntry)), ','.join('?' * len(self.valueIndex))))
-            result = conn.execute(s, self.valueEntry + self.valueIndex)
+            s = ("SELECT a.pubkey, a.page "
+                 "  FROM indices AS a "
+                 " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
+                 " WHERE a.entry IN ({!s}) "
+                 "AND a.idx_text IN ({!s}) "
+                 "AND b.title || ' (' || a.version || ')' IN ({!s}) "
+                 "AND a.page IS NOT NULL "
+                 "GROUP BY a.pubkey, a.page ORDER BY a.pubkey, a.page;"
+                 .format(','.join('?' * len(self.valueEntry)), ','.join('?' * len(self.valueIndex)),
+                         ','.join('?' * len(self.valuePub))))
+            result = conn.execute(s, self.valueEntry + self.valueIndex + self.valuePub)
             count = 0
             for row in result:
                 pages = [x.strip() for x in row[1].split(',')]
@@ -412,6 +523,35 @@ class ExportForm:
                 print(pinput)
                 process = subprocess.Popen(pinput, shell=False,  stdout=subprocess.PIPE)
 
+        # callback actions if text boxes have been altered
+        def callback_pub(sv):
+            self.lstIndex.delete(0, END)
+            self.lstEntry.delete(0, END)
+            self.lstPages.delete(0, END)
+            cb = sv.get()
+            if cb:
+                self.lstPub.delete(0, END)
+                # print(cb, type(cb))
+                sql = ("SELECT b.title || ' (' || a.version || ')' "
+                       "  FROM indices as a "
+                       " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
+                       " WHERE a.page IS NOT NULL "
+                       " GROUP BY b.title, a.version "
+                       "HAVING lower(b.title || ' (' || a.version || ')') LIKE '%{!s}%' "
+                       " ORDER BY b.title, a.version;"
+                       .format(cb))
+                result = conn.execute(sql)
+            else:
+                sql = ("SELECT b.title || ' (' || a.version || ')' "
+                       "  FROM indices as a "
+                       " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
+                       " WHERE a.page IS NOT NULL "
+                       " GROUP BY b.title, a.version "
+                       " ORDER BY b.title, a.version;")
+                result = conn.execute(sql)
+            for row in result:
+                self.lstPub.insert(END, row[0])
+
         def callback_idx(sv):
             self.lstEntry.delete(0, END)
             self.lstPages.delete(0, END)
@@ -419,11 +559,26 @@ class ExportForm:
             if cb:
                 self.lstIndex.delete(0, END)
                 # print(cb, type(cb))
-                result = conn.execute("SELECT idx_text FROM indices WHERE page IS NOT NULL "
-                                      "GROUP BY idx_text, idx HAVING idx_text LIKE '%{!s}%' ORDER BY idx;".format(cb))
+                sql = ("SELECT idx_text "
+                       "  FROM indices as a "
+                       " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
+                       " WHERE a.page IS NOT NULL "
+                       "   AND b.title || ' (' || a.version || ')' IN ({!s}) "
+                       " GROUP BY a.idx_text, a.idx "
+                       "HAVING idx_text LIKE '%{!s}%' "
+                       "ORDER BY idx;"
+                       .format(','.join('?' * len(self.valuePub)), cb))
+                result = conn.execute(sql, self.valuePub)
             else:
-                result = conn.execute("SELECT idx_text FROM indices WHERE page IS NOT NULL"
-                                      "GROUP BY idx_text, idx ORDER BY idx;")
+                sql = ("SELECT idx_text "
+                       "  FROM indices as a "
+                       " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
+                       " WHERE a.page IS NOT NULL "
+                       "   AND b.title || ' (' || a.version || ')' IN ({!s}) "
+                       " GROUP BY a.idx_text, a.idx "
+                       " ORDER BY idx;"
+                       .format(','.join('?' * len(self.valuePub))))
+                result = conn.execute(sql, self.valuePub)
             for row in result:
                 self.lstIndex.insert(END, row[0])
 
@@ -433,22 +588,64 @@ class ExportForm:
             if cb:
                 self.lstEntry.delete(0, END)
                 # print(cb, type(cb))
-                sql = ("SELECT entry FROM indices WHERE idx_text IN ({!s}) "
-                       "GROUP BY entry HAVING entry LIKE '%{!s}%' ORDER BY idx;"
-                       .format(','.join('?' * len(self.valueIndex)), cb))
-                result = conn.execute(sql, self.valueIndex)
+                sql = ("SELECT entry "
+                       "  FROM indices as a "
+                       " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
+                       " WHERE a.page IS NOT NULL "
+                       "   AND b.title || ' (' || a.version || ')' IN ({!s}) "
+                       "   AND a.idx_text IN ({!s}) "
+                       " GROUP BY a.entry "
+                       "HAVING entry LIKE '%{!s}%' "
+                       "ORDER BY idx;"
+                       .format(','.join('?' * len(self.valuePub)), ','.join('?' * len(self.valueIndex)), cb))
+                result = conn.execute(sql, self.valuePub, self.valueIndex)
             else:
-                sql = ("SELECT Entry FROM indices WHERE idx_text IN ({!s}) "
-                       "GROUP BY entry ORDER BY idx;".format(','.join('?' * len(self.valueIndex))))
-                result = conn.execute(sql, self.valueIndex)
+                sql = ("SELECT entry "
+                       "  FROM indices as a "
+                       " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
+                       " WHERE a.page IS NOT NULL "
+                       "   AND b.title || ' (' || a.version || ')' IN ({!s}) "
+                       "   AND a.idx_text IN ({!s}) "
+                       " GROUP BY a.entry "
+                       "ORDER BY idx;"
+                       .format(','.join('?' * len(self.valuePub)), ','.join('?' * len(self.valueIndex))))
+                result = conn.execute(sql, self.valuePub, self.valueIndex)
             for row in result:
                 self.lstEntry.insert(END, row[0])
 
+        # event functions for textbox entry mouse clicks
+        def onclick_txtPub(evt):
+            color = self.txtPub.cget('fg')
+            if color == 'gray':
+                self.txtPub.delete(0, END)
+                self.txtPub.config(fg='black')
+
+        def onclick_txtIndex(evt):
+            color = self.txtIndex.cget('fg')
+            if color == 'gray':
+                self.txtIndex.delete(0, END)
+                self.txtIndex.config(fg='black')
+
+        def onclick_txtEntry(evt):
+            color = self.txtEntry.cget('fg')
+            if color == 'gray':
+                self.txtEntry.delete(0, END)
+                self.txtEntry.config(fg='black')
+
+        self.txtPub.bind('<Button>', onclick_txtPub)
+        self.txtIndex.bind('<Button>', onclick_txtIndex)
+        self.txtEntry.bind('<Button>', onclick_txtEntry)
+        self.lstPub.bind('<<ListboxSelect>>', onselect_Pub)
         self.lstIndex.bind('<<ListboxSelect>>', onselect_Index)
         self.lstEntry.bind('<<ListboxSelect>>', onselect_Entry)
         self.lstPages.bind('<<ListboxSelect>>', onselect_Pages)
+        self.sv_pub.trace("w", lambda name, index, mode, sv=self.sv_pub: callback_pub(sv))
         self.sv_idx.trace("w", lambda name, index, mode, sv=self.sv_idx: callback_idx(sv))
         self.sv_ent.trace("w", lambda name, index, mode, sv=self.sv_ent: callback_ent(sv))
+
+    def selectall_pub(self):
+        self.lstPub.select_set(0, END)
+        self.lstPub.event_generate("<<ListboxSelect>>")
 
     def selectall_idx(self):
         self.lstIndex.select_set(0, END)
@@ -457,6 +654,10 @@ class ExportForm:
     def selectall_ent(self):
         self.lstEntry.select_set(0, END)
         self.lstEntry.event_generate("<<ListboxSelect>>")
+
+    def clearall_pub(self):
+        self.lstPub.selection_clear(0, END)
+        self.lstPub.event_generate("<<ListboxSelect>>")
 
     def clearall_idx(self):
         self.lstIndex.selection_clear(0, END)
