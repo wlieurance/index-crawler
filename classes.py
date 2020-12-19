@@ -1,7 +1,16 @@
+# Index
 import pandas as pd
 import sqlite3 as sqlite
 import re
 import os
+
+# ExportForm
+# separate imports needed due to tkinter idiosyncrasies
+from tkinter import *
+from tkinter.ttk import *
+# from tkinter import filedialog, messagebox
+import subprocess
+import json
 
 
 class Index:
@@ -239,3 +248,229 @@ class Index:
         return {'pub_rows': pub_rows, 'index_rows': index_rows}
 
 
+class ExportForm:
+    def __init__(self, master, conn, scrptdir):
+        self.master = master
+        # self.cframe = Frame(self.master)
+        # self.cframe.grid(row=0, column=0, sticky='nsew')
+
+        self.valueIndex = []
+        self.valueEntry = []
+        self.valuePages = []
+        self.sv_idx = StringVar()
+        self.sv_ent = StringVar()
+
+        with open(os.path.join(scrptdir, 'pdf_options.json'), 'r') as f:
+            pdf_options = json.load(f)
+        self.pdf = None
+        for i in pdf_options:
+            if os.path.isfile(i['readerpath']):
+                self.pdf = i
+            else:
+                break
+        print('pdf options:', self.pdf)
+
+        # self.path_to_reader = os.path.abspath(r'/usr/bin/evince')
+
+        self.style = Style()
+        self.style.configure("TButton", padding=6, relief="flat", background="#ccc", width=20)
+
+        self.txtIndex = Entry(self.master, textvariable=self.sv_idx, width=40)
+        self.txtIndex.grid(row=0, column=0, sticky='ew')
+
+        self.txtEntry = Entry(self.master, textvariable=self.sv_ent, width=30)
+        self.txtEntry.grid(row=0, column=2, sticky='ew')
+
+        self.lstIndex = Listbox(self.master, selectmode=EXTENDED, exportselection=0, width=40)
+        self.lstIndex.grid(row=1, column=0, sticky='nsew')
+
+        self.lstEntry = Listbox(self.master, selectmode=EXTENDED, exportselection=0, width=30)
+        self.lstEntry.grid(row=1, column=2, sticky='nsew')
+
+        self.lstPages = Listbox(self.master, selectmode=SINGLE, exportselection=0, width=20)
+        self.lstPages.grid(row=1, column=4, sticky='nsew')
+
+        self.btnSelectAll_idx = Button(self.master, width=10, text='Select All', style="TButton",
+                                           command=self.selectall_idx)
+        self.btnSelectAll_idx.grid(row=3, column=0, sticky='w')
+
+        self.btnSelectAll_entry = Button(self.master, width=10, text='Select All', style="TButton",
+                                             command=self.selectall_ent)
+        self.btnSelectAll_entry.grid(row=3, column=2, sticky='w')
+
+        self.btnClearAll_idx = Button(self.master, width=10, text='Clear All', style="TButton",
+                                          command=self.clearall_idx)
+        self.btnClearAll_idx.grid(row=3, column=0, sticky='e')
+
+        self.btnClearAll_entry = Button(self.master, width=10, text='Clear All', style="TButton",
+                                            command=self.clearall_ent)
+        self.btnClearAll_entry.grid(row=3, column=2, sticky='e')
+
+        # self.btnGrab = Button(self.master, width=20, text='Export', style="TButton", command=self.grab)
+        # self.btnGrab.grid(row=3, column=4, sticky='w')
+
+        self.scrollbar_idx_v = Scrollbar(self.master, orient=VERTICAL)
+        self.lstIndex.config(yscrollcommand=self.scrollbar_idx_v.set)
+        self.scrollbar_idx_v.config(command=self.lstIndex.yview)
+        self.scrollbar_idx_v.grid(row=1, column=1, sticky='ns')
+        self.scrollbar_idx_h = Scrollbar(self.master, orient=HORIZONTAL)
+        self.lstIndex.config(xscrollcommand=self.scrollbar_idx_h.set)
+        self.scrollbar_idx_h.config(command=self.lstIndex.xview)
+        self.scrollbar_idx_h.grid(row=2, column=0, sticky='ew')
+
+        self.scrollbar_ent_v = Scrollbar(self.master, orient=VERTICAL)
+        self.lstEntry.config(yscrollcommand=self.scrollbar_ent_v.set)
+        self.scrollbar_ent_v.config(command=self.lstEntry.yview)
+        self.scrollbar_ent_v.grid(row=1, column=3, sticky='ns')
+        self.scrollbar_ent_h = Scrollbar(self.master, orient=HORIZONTAL)
+        self.lstEntry.config(xscrollcommand=self.scrollbar_ent_h.set)
+        self.scrollbar_ent_h.config(command=self.lstEntry.xview)
+        self.scrollbar_ent_h.grid(row=2, column=2, sticky='ew')
+
+        # set weights for resize
+        self.master.grid_columnconfigure(0, weight=4)
+        self.master.grid_columnconfigure(1, weight=0)
+        self.master.grid_columnconfigure(2, weight=4)
+        self.master.grid_columnconfigure(3, weight=0)
+        self.master.grid_columnconfigure(4, weight=1)
+        self.master.grid_rowconfigure(0, weight=0)
+        self.master.grid_rowconfigure(1, weight=4)
+        self.master.grid_rowconfigure(2, weight=0)
+        self.master.grid_rowconfigure(3, weight=0)
+
+        result = conn.execute("SELECT idx_text FROM indices WHERE page IS NOT NULL "
+                              "GROUP BY idx_text, idx ORDER BY idx_text, idx;")
+        for row in result:
+            # print(row)
+            self.lstIndex.insert(END, row[0])
+
+        def onselect_Index(evt):
+            self.lstEntry.delete(0, END)
+            self.lstPages.delete(0, END)
+            w = evt.widget
+            c = w.curselection()
+            value = []
+            li = len(c)
+            for i in range(0, li):
+                value.append(w.get(c[i]))
+            # print(value)
+            self.valueIndex = value
+            s = ("SELECT entry FROM indices WHERE idx_text IN ({!s}) "
+                 "GROUP BY entry ORDER BY idx_text, idx;".format(','.join('?' * len(self.valueIndex))))
+            result = conn.execute(s, self.valueIndex)
+            count = 0
+            for row in result:
+                count += 1
+                self.lstEntry.insert(END, row[0])
+            if count == 1:
+                self.lstEntry.selection_set(0)
+                self.lstEntry.event_generate("<<ListboxSelect>>")
+
+        def onselect_Entry(evt):
+            self.lstPages.delete(0, END)
+            w = evt.widget
+            c = w.curselection()
+            value = []
+            li = len(c)
+            for i in range(0, li):
+                value.append(w.get(c[i]))
+            # print(value)
+            self.valueEntry = value
+            s = ("SELECT pubkey, page FROM indices WHERE entry IN ({!s}) "
+                 "AND idx_text IN ({!s}) GROUP BY pubkey, page ORDER BY pubkey, page;"
+                 .format(','.join('?' * len(self.valueEntry)), ','.join('?' * len(self.valueIndex))))
+            result = conn.execute(s, self.valueEntry + self.valueIndex)
+            count = 0
+            for row in result:
+                pages = [x.strip() for x in row[1].split(',')]
+                for p in pages:
+                    count += 1
+                    self.lstPages.insert(END, ' | '.join((row[0], p)))
+            # if count == 1:
+            #     self.lstPages.selection_set(0)
+            #     self.lstPages.event_generate("<<ListboxSelect>>")
+
+        def onselect_Pages(evt):
+            w = evt.widget
+            c = w.curselection()
+            value = []
+            li = len(c)
+            for i in range(0, li):
+                value.append(tuple(w.get(c[i]).split(' | ')))
+            # print(value)
+            self.valuePages = value
+            for i in self.valuePages:
+                pg = int(i[1].split('-')[0])
+                rec = conn.execute("SELECT link, adjust FROM pub WHERE pubkey = ?;", (i[0],)).fetchone()
+                pdf_path = rec[0]
+                pg += int(rec[1])
+            if self.pdf and pdf_path:
+                pinput = [self.pdf['readerpath']]
+                if self.pdf['options'] is not None:
+                    pinput += [x for x in self.pdf['options'] if x is not None]
+                pinput += [self.pdf['page'].format(str(pg))] + [os.path.abspath(pdf_path)]
+                print(pinput)
+                process = subprocess.Popen(pinput, shell=False,  stdout=subprocess.PIPE)
+
+        def callback_idx(sv):
+            self.lstEntry.delete(0, END)
+            self.lstPages.delete(0, END)
+            cb = sv.get()
+            if cb:
+                self.lstIndex.delete(0, END)
+                # print(cb, type(cb))
+                result = conn.execute("SELECT idx_text FROM indices WHERE page IS NOT NULL "
+                                      "GROUP BY idx_text, idx HAVING idx_text LIKE '%{!s}%' ORDER BY idx;".format(cb))
+            else:
+                result = conn.execute("SELECT idx_text FROM indices WHERE page IS NOT NULL"
+                                      "GROUP BY idx_text, idx ORDER BY idx;")
+            for row in result:
+                self.lstIndex.insert(END, row[0])
+
+        def callback_ent(sv):
+            self.lstPages.delete(0, END)
+            cb = sv.get()
+            if cb:
+                self.lstEntry.delete(0, END)
+                # print(cb, type(cb))
+                sql = ("SELECT entry FROM indices WHERE idx_text IN ({!s}) "
+                       "GROUP BY entry HAVING entry LIKE '%{!s}%' ORDER BY idx;"
+                       .format(','.join('?' * len(self.valueIndex)), cb))
+                result = conn.execute(sql, self.valueIndex)
+            else:
+                sql = ("SELECT Entry FROM indices WHERE idx_text IN ({!s}) "
+                       "GROUP BY entry ORDER BY idx;".format(','.join('?' * len(self.valueIndex))))
+                result = conn.execute(sql, self.valueIndex)
+            for row in result:
+                self.lstEntry.insert(END, row[0])
+
+        self.lstIndex.bind('<<ListboxSelect>>', onselect_Index)
+        self.lstEntry.bind('<<ListboxSelect>>', onselect_Entry)
+        self.lstPages.bind('<<ListboxSelect>>', onselect_Pages)
+        self.sv_idx.trace("w", lambda name, index, mode, sv=self.sv_idx: callback_idx(sv))
+        self.sv_ent.trace("w", lambda name, index, mode, sv=self.sv_ent: callback_ent(sv))
+
+    def selectall_idx(self):
+        self.lstIndex.select_set(0, END)
+        self.lstIndex.event_generate("<<ListboxSelect>>")
+
+    def selectall_ent(self):
+        self.lstEntry.select_set(0, END)
+        self.lstEntry.event_generate("<<ListboxSelect>>")
+
+    def clearall_idx(self):
+        self.lstIndex.selection_clear(0, END)
+        self.lstIndex.event_generate("<<ListboxSelect>>")
+
+    def clearall_ent(self):
+        self.lstEntry.selection_clear(0, END)
+        self.lstEntry.event_generate("<<ListboxSelect>>")
+
+    # def grab(self):
+    #     w = self.lstPages
+    #     c = w.curselection()
+    #     value = []
+    #     li = len(c)
+    #     for i in range(0, li):
+    #         value.append(w.get(c[i]))
+    #     print(value)
