@@ -457,7 +457,7 @@ class ExportForm:
             # print(value)
             self.valueIndex = value
             s = '\n'.join((
-                "SELECT a.entry ",
+                "SELECT a.entry, a.notes ",
                 "  FROM indices AS a ",
                 " INNER JOIN pub AS b ON a.pubkey = b.pubkey ",
                 " WHERE a.idx_text IN ({!s}) ",
@@ -469,7 +469,10 @@ class ExportForm:
             count = 0
             for row in result:
                 count += 1
-                self.lstEntry.insert(END, row[0])
+                if not row[1]:
+                    self.lstEntry.insert(END, row[0])
+                else:
+                    self.lstEntry.insert(END, ''.join((row[0], ' | (', row[1], ')')))
             if count == 1:
                 self.lstEntry.selection_set(0)
                 self.lstEntry.event_generate("<<ListboxSelect>>")
@@ -481,7 +484,7 @@ class ExportForm:
             value = []
             li = len(c)
             for i in range(0, li):
-                value.append(w.get(c[i]))
+                value.append(w.get(c[i]).split('|')[0].strip())
             # print(value)
             self.valueEntry = value
             s = '\n'.join((
@@ -599,7 +602,7 @@ class ExportForm:
             cb = sv.get()
             if cb:
                 sql = '\n'.join((
-                    "SELECT entry ",
+                    "SELECT a.entry, a.notes ",
                     "  FROM indices as a ",
                     " INNER JOIN pub AS b ON a.pubkey = b.pubkey ",
                     " WHERE a.page IS NOT NULL ",
@@ -612,7 +615,7 @@ class ExportForm:
                 result = conn.execute(sql, self.valuePub, self.valueIndex)
             else:
                 sql = '\n'.join((
-                    "SELECT entry ",
+                    "SELECT a.entry, a.notes ",
                     "  FROM indices as a ",
                     " INNER JOIN pub AS b ON a.pubkey = b.pubkey ",
                     " WHERE a.page IS NOT NULL ",
@@ -623,7 +626,10 @@ class ExportForm:
                     .format(','.join('?' * len(self.valuePub)), ','.join('?' * len(self.valueIndex)))
                 result = conn.execute(sql, self.valuePub, self.valueIndex)
             for row in result:
-                self.lstEntry.insert(END, row[0])
+                if not row[1]:
+                    self.lstEntry.insert(END, row[0])
+                else:
+                    self.lstEntry.insert(END, ''.join((row[0], ' | (', row[1], ')')))
 
         # event functions for textbox entry mouse clicks
         def onclick_txtPub(evt):
