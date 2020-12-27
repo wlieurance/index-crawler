@@ -7,7 +7,7 @@ indented sub-headings, with comma separated pages numbers e.g.
 ```
 Level 1, ##,
 	Level 1.1, ##, ##-##, ##
-		Level 1.1.1 ##, See note
+		Level 1.1.1. See note, ##
 	Level 1.2
 		See also note
 ```
