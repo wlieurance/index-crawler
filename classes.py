@@ -5,11 +5,9 @@ import re
 import os
 
 # ExportForm
-# separate imports needed due to tkinter idiosyncrasies
 import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
-# from tkinter import filedialog, messagebox
 import subprocess
 import json
 
@@ -399,11 +397,14 @@ class ExportForm:
         self.master.grid_rowconfigure(3, weight=0)
         self.master.grid_rowconfigure(4, weight=0)
 
-        pub_result = conn.execute("SELECT b.title || ' (' || a.version || ')' "
-                                  "FROM indices as a "
-                                  "INNER JOIN pub AS b ON a.pubkey = b.pubkey "
-                                  "WHERE a.page IS NOT NULL "
-                                  "GROUP BY b.title, a.version ORDER BY b.title, a.version;")
+        init_sql = '\n'.join((
+            "SELECT b.title || ' (' || a.version || ')' ",
+            "  FROM indices as a ",
+            " INNER JOIN pub AS b ON a.pubkey = b.pubkey ",
+            " WHERE a.page IS NOT NULL ",
+            " GROUP BY b.title, a.version ",
+            " ORDER BY b.title, a.version;"))
+        pub_result = conn.execute(init_sql)
         for row in pub_result:
             self.lstPub.insert(END, row[0])
 
@@ -427,12 +428,14 @@ class ExportForm:
                 value.append(w.get(c[i]))
             # print(value)
             self.valuePub = value
-            s = ("SELECT idx_text FROM indices AS a "
-                 "INNER JOIN pub AS b ON a.pubkey = b.pubkey "
-                 "WHERE b.title || ' (' || a.version || ')' IN ({!s}) "
-                 "AND a.page IS NOT NULL "
-                 "GROUP BY a.idx_text ORDER BY a.idx_text;"
-                 .format(','.join('?' * len(self.valuePub))))
+            s = '\n'.join((
+                "SELECT idx_text FROM indices AS a ",
+                " INNER JOIN pub AS b ON a.pubkey = b.pubkey ",
+                " WHERE b.title || ' (' || a.version || ')' IN ({!s}) ",
+                "   AND a.page IS NOT NULL ",
+                " GROUP BY a.idx_text ",
+                " ORDER BY lower(a.idx_text);"))\
+                .format(','.join('?' * len(self.valuePub)))
             result = conn.execute(s, self.valuePub)
             count = 0
             for row in result:
@@ -453,14 +456,15 @@ class ExportForm:
                 value.append(w.get(c[i]))
             # print(value)
             self.valueIndex = value
-            s = ("SELECT a.entry "
-                 "  FROM indices AS a "
-                 " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
-                 " WHERE a.idx_text IN ({!s}) "
-                 "AND b.title || ' (' || a.version || ')' IN ({!s}) "
-                 "AND a.page IS NOT NULL "
-                 "GROUP BY a.entry ORDER BY a.idx_text, a.idx;"
-                 .format(','.join('?' * len(self.valueIndex)), ','.join('?' * len(self.valuePub))))
+            s = '\n'.join((
+                "SELECT a.entry ",
+                "  FROM indices AS a ",
+                " INNER JOIN pub AS b ON a.pubkey = b.pubkey ",
+                " WHERE a.idx_text IN ({!s}) ",
+                "   AND b.title || ' (' || a.version || ')' IN ({!s}) ",
+                "   AND a.page IS NOT NULL ",
+                " GROUP BY a.entry ORDER BY a.idx;"))\
+                .format(','.join('?' * len(self.valueIndex)), ','.join('?' * len(self.valuePub)))
             result = conn.execute(s, self.valueIndex + self.valuePub)
             count = 0
             for row in result:
@@ -480,16 +484,18 @@ class ExportForm:
                 value.append(w.get(c[i]))
             # print(value)
             self.valueEntry = value
-            s = ("SELECT a.pubkey, a.page "
-                 "  FROM indices AS a "
-                 " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
-                 " WHERE a.entry IN ({!s}) "
-                 "AND a.idx_text IN ({!s}) "
-                 "AND b.title || ' (' || a.version || ')' IN ({!s}) "
-                 "AND a.page IS NOT NULL "
-                 "GROUP BY a.pubkey, a.page ORDER BY a.pubkey, a.page;"
-                 .format(','.join('?' * len(self.valueEntry)), ','.join('?' * len(self.valueIndex)),
-                         ','.join('?' * len(self.valuePub))))
+            s = '\n'.join((
+                "SELECT a.pubkey, a.page ",
+                "  FROM indices AS a ",
+                " INNER JOIN pub AS b ON a.pubkey = b.pubkey ",
+                " WHERE a.entry IN ({!s}) ",
+                "   AND a.idx_text IN ({!s}) ",
+                "   AND b.title || ' (' || a.version || ')' IN ({!s}) ",
+                "   AND a.page IS NOT NULL ",
+                " GROUP BY a.pubkey, a.page ",
+                " ORDER BY a.pubkey, a.page;"))\
+                .format(','.join('?' * len(self.valueEntry)), ','.join('?' * len(self.valueIndex)),
+                        ','.join('?' * len(self.valuePub)))
             result = conn.execute(s, self.valueEntry + self.valueIndex + self.valuePub)
             count = 0
             for row in result:
@@ -525,90 +531,96 @@ class ExportForm:
 
         # callback actions if text boxes have been altered
         def callback_pub(sv):
+            self.lstPub.delete(0, END)
+            # print(cb, type(cb))
             self.lstIndex.delete(0, END)
             self.lstEntry.delete(0, END)
             self.lstPages.delete(0, END)
             cb = sv.get()
             if cb:
-                self.lstPub.delete(0, END)
-                # print(cb, type(cb))
-                sql = ("SELECT b.title || ' (' || a.version || ')' "
-                       "  FROM indices as a "
-                       " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
-                       " WHERE a.page IS NOT NULL "
-                       " GROUP BY b.title, a.version "
-                       "HAVING lower(b.title || ' (' || a.version || ')') LIKE '%{!s}%' "
-                       " ORDER BY b.title, a.version;"
-                       .format(cb))
+                sql = '\n'.join((
+                    "SELECT b.title || ' (' || a.version || ')' ",
+                    "  FROM indices as a ",
+                    " INNER JOIN pub AS b ON a.pubkey = b.pubkey ",
+                    " WHERE a.page IS NOT NULL ",
+                    " GROUP BY b.title, a.version ",
+                    "HAVING lower(b.title || ' (' || a.version || ')') LIKE '%{!s}%' ",
+                    " ORDER BY b.title, a.version;"))\
+                    .format(cb)
                 result = conn.execute(sql)
             else:
-                sql = ("SELECT b.title || ' (' || a.version || ')' "
-                       "  FROM indices as a "
-                       " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
-                       " WHERE a.page IS NOT NULL "
-                       " GROUP BY b.title, a.version "
-                       " ORDER BY b.title, a.version;")
+                sql = '\n'.join((
+                    "SELECT b.title || ' (' || a.version || ')' ",
+                    "  FROM indices as a ",
+                    " INNER JOIN pub AS b ON a.pubkey = b.pubkey ",
+                    " WHERE a.page IS NOT NULL ",
+                    " GROUP BY b.title, a.version ",
+                    " ORDER BY b.title, a.version;"))
                 result = conn.execute(sql)
             for row in result:
                 self.lstPub.insert(END, row[0])
 
         def callback_idx(sv):
+            self.lstIndex.delete(0, END)
+            # print(cb, type(cb))
             self.lstEntry.delete(0, END)
             self.lstPages.delete(0, END)
             cb = sv.get()
             if cb:
-                self.lstIndex.delete(0, END)
-                # print(cb, type(cb))
-                sql = ("SELECT idx_text "
-                       "  FROM indices as a "
-                       " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
-                       " WHERE a.page IS NOT NULL "
-                       "   AND b.title || ' (' || a.version || ')' IN ({!s}) "
-                       " GROUP BY a.idx_text, a.idx "
-                       "HAVING idx_text LIKE '%{!s}%' "
-                       "ORDER BY idx;"
-                       .format(','.join('?' * len(self.valuePub)), cb))
+                sql = '\n'.join((
+                    "SELECT idx_text ",
+                    "  FROM indices as a ",
+                    " INNER JOIN pub AS b ON a.pubkey = b.pubkey ",
+                    " WHERE a.page IS NOT NULL ",
+                    "   AND b.title || ' (' || a.version || ')' IN ({!s}) ",
+                    " GROUP BY a.idx_text, a.idx ",
+                    "HAVING idx_text LIKE '%{!s}%' ",
+                    "ORDER BY lower(idx_text);"))\
+                    .format(','.join('?' * len(self.valuePub)), cb)
                 result = conn.execute(sql, self.valuePub)
             else:
-                sql = ("SELECT idx_text "
-                       "  FROM indices as a "
-                       " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
-                       " WHERE a.page IS NOT NULL "
-                       "   AND b.title || ' (' || a.version || ')' IN ({!s}) "
-                       " GROUP BY a.idx_text, a.idx "
-                       " ORDER BY idx;"
-                       .format(','.join('?' * len(self.valuePub))))
+                sql = '\n'.join((
+                    "SELECT idx_text ",
+                    "  FROM indices as a ",
+                    " INNER JOIN pub AS b ON a.pubkey = b.pubkey ",
+                    " WHERE a.page IS NOT NULL ",
+                    "   AND b.title || ' (' || a.version || ')' IN ({!s}) ",
+                    " GROUP BY a.idx_text, a.idx ",
+                    " ORDER BY lower(idx_text);"))\
+                    .format(','.join('?' * len(self.valuePub)))
                 result = conn.execute(sql, self.valuePub)
             for row in result:
                 self.lstIndex.insert(END, row[0])
 
         def callback_ent(sv):
+            self.lstEntry.delete(0, END)
+            # print(cb, type(cb))
             self.lstPages.delete(0, END)
             cb = sv.get()
             if cb:
-                self.lstEntry.delete(0, END)
-                # print(cb, type(cb))
-                sql = ("SELECT entry "
-                       "  FROM indices as a "
-                       " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
-                       " WHERE a.page IS NOT NULL "
-                       "   AND b.title || ' (' || a.version || ')' IN ({!s}) "
-                       "   AND a.idx_text IN ({!s}) "
-                       " GROUP BY a.entry "
-                       "HAVING entry LIKE '%{!s}%' "
-                       "ORDER BY idx;"
-                       .format(','.join('?' * len(self.valuePub)), ','.join('?' * len(self.valueIndex)), cb))
+                sql = '\n'.join((
+                    "SELECT entry ",
+                    "  FROM indices as a ",
+                    " INNER JOIN pub AS b ON a.pubkey = b.pubkey ",
+                    " WHERE a.page IS NOT NULL ",
+                    "   AND b.title || ' (' || a.version || ')' IN ({!s}) ",
+                    "   AND a.idx_text IN ({!s}) ",
+                    " GROUP BY a.entry ",
+                    "HAVING entry LIKE '%{!s}%' ",
+                    "ORDER BY idx;"))\
+                    .format(','.join('?' * len(self.valuePub)), ','.join('?' * len(self.valueIndex)), cb)
                 result = conn.execute(sql, self.valuePub, self.valueIndex)
             else:
-                sql = ("SELECT entry "
-                       "  FROM indices as a "
-                       " INNER JOIN pub AS b ON a.pubkey = b.pubkey "
-                       " WHERE a.page IS NOT NULL "
-                       "   AND b.title || ' (' || a.version || ')' IN ({!s}) "
-                       "   AND a.idx_text IN ({!s}) "
-                       " GROUP BY a.entry "
-                       "ORDER BY idx;"
-                       .format(','.join('?' * len(self.valuePub)), ','.join('?' * len(self.valueIndex))))
+                sql = '\n'.join((
+                    "SELECT entry ",
+                    "  FROM indices as a ",
+                    " INNER JOIN pub AS b ON a.pubkey = b.pubkey ",
+                    " WHERE a.page IS NOT NULL ",
+                    "   AND b.title || ' (' || a.version || ')' IN ({!s}) ",
+                    "   AND a.idx_text IN ({!s}) ",
+                    " GROUP BY a.entry ",
+                    "ORDER BY idx;"))\
+                    .format(','.join('?' * len(self.valuePub)), ','.join('?' * len(self.valueIndex)))
                 result = conn.execute(sql, self.valuePub, self.valueIndex)
             for row in result:
                 self.lstEntry.insert(END, row[0])

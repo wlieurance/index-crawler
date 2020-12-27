@@ -28,6 +28,8 @@ if __name__ == "__main__":
     conn = sqlite.connect(dbpath)
     root = tkinter.Tk()
     root.title("Index Crawler")
+    icon = tkinter.PhotoImage(file='icon.png')
+    root.iconphoto(False, icon)
     mf = ExportForm(root, conn, scrptdir)
     root.mainloop()
     conn.close()
