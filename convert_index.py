@@ -31,7 +31,7 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--page_adjust', type=int, default=0,
                         help='If the page of the PDF is not the same as the page of the text, the adjustment number '
                              'to correct for that (e.g. 1, -2). Negative numbers need to be quoted.')
-    parser.add_argument('-c', '--conflict', default='fail', choices=['fail', 'update', 'replace'],
+    parser.add_argument('-c', '--conflict', default='fail', choices=['fail', 'ignore', 'replace'],
                         help='If there is a record conflict on a database insert, then fail/ignore/replace on '
                              'the record insert.')
 

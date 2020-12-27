@@ -35,7 +35,7 @@ class Index:
         self.abbr = abbr  # an abbreviation or acronym of the text title
         self.link = link  # the path to the pdf of the document
         self.adjust = adjust  # the number of pages to adjust the pdf such that it opens to the proper index page
-        self.conflict = conflict  # ['fail', 'update', 'replace'] for db insert
+        self.conflict = conflict  # ['fail', 'ignore', 'replace'] for db insert
 
         # BibTex attributes
         self.author = author  # the author(s) of the text
@@ -95,9 +95,11 @@ class Index:
             r'^(?P<tabs>\t*)',  # 1. name=tabs; capture the tabs at the bol
             r'(?P<text>[^\t]*?)',  # 2. name=text; capture any non-tab value up to next group (lazy)
             r'(?:[.,]\s+)?',  # 3. optional non-capture of either '.' or ',' followed by whitespace
-            r'(?P<note>See.+?)?',  # 4. name=note; optional capture text starting with 'See' up to next group (lazy)
-            r'(?:[\.,]\s+)?',  # 5. see 2
-            r'(?P<p>\d(?:[\d\-,\s])*)?$'  # 6. name=p; opt. capture digits sep. by '-' or ', ' for page no. up to eol
+            # 4. name=note; optional capture text starting with 'See' etc. up to next group (lazy)
+            r'(?P<note>(?:See|Note|Tag).+?)?',
+            # 5. name=p; opt. capture digits sep. by '-' or ', ' for page no. up to eol, but must be preceded by a '. '
+            # or a ', ' (capturing group within non-capturing group)
+            r'((?:[\.,]\s+)(?P<p>\d(?:[\d\-,\s])*))?$'
             ]
         re_string = ''.join(re_list)
         exp = re.compile(re_string)
