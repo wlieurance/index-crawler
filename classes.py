@@ -24,8 +24,7 @@ class Index:
     """
 
     def __init__(self, path, dbpath=None, delimiter='|', pubkey=None, abbr=None, link=None, adjust=0, conflict='fail',
-                 version=None, author=None, title=None, publisher=None, year=None, volume=None, series=None,
-                 address=None, edition=None, month=None, note=None, isbn=None):
+                 version=None, bib=None):
         # index specific attributes
         self.path = path  # the file path to the index text
         self.dbpath = dbpath  # the path to the sqlite database
@@ -38,23 +37,13 @@ class Index:
         self.conflict = conflict  # ['fail', 'ignore', 'replace'] for db insert
 
         # BibTex attributes
-        self.author = author  # the author(s) of the text
-        self.title = title  # the full title of the text the index references (e.g. Player's Handbook)
-        self.edition = edition  # the text edition of the text (e.g. '5th', )
-        self.publisher = publisher  # the name of the publisher of the text
-        self.month = month  # the month of publication of this edition
-        self.year = year  # the year the index text of this edition was published
-        self.volume = volume  # the volume number of the index text
-        self.series = series  # the name of the series  or set of books the index belongs to
-        self.address = address  # the address of the institution of publisher
-        self.note = note  # any additional info
-        self.isbn = isbn  # the ISBN of the index text
+        self.bib = bib  # the BibTeX style entries ion dictionary form
 
         # data storage attributes
         # a pandas data frame that is the index
         self.dict_index = None  # a list of dictionary entries that is the index
         self.df_index = pd.DataFrame(columns=['entry', 'idx', 'idx_text', 'page', 'notes'])
-        self.tree_index = None  # an item-children tree like list of dictionary items that is the index
+        self.tree_index = dict()  # an item-children tree like list of dictionary items that is the index
 
     @staticmethod
     def idx_dict_to_text(idx, delim='.'):
@@ -184,13 +173,14 @@ class Index:
                 # print(dic)
                 sub_list.append(dic)
             elif level > level_actual:
-                print("level > sublevel", sub_list)
+                # print("level > sublevel", sub_list)
                 return sub_list
         # print("end of for loop", sub_list)
         return sub_list
 
     def dict_to_tree(self):
-        self.tree_index = self.construct_tree(current_list=self.dict_index, level=0)
+        self.tree_index['bib'] = self.bib
+        self.tree_index['entries'] = self.construct_tree(current_list=self.dict_index, level=0)
 
     def create_db(self):
         con = sqlite.connect(self.dbpath)
@@ -234,10 +224,13 @@ class Index:
                   "series, address, note, isbn, link, adjust) " \
                   "VALUES (:pubkey, :author, :title, :abbr, :edition, :publisher, :month, :year, :volume, :series, " \
                   ":address, :note, :isbn, :link, :adjust);".format(conflict=conflict_text)
-        c.execute(pub_sql, {'pubkey': self.pubkey, 'author': self.author, 'title': self.title, 'abbr': self.abbr,
-                            'edition': self.edition, 'publisher': self.publisher, 'month': self.month,
-                            'year': self.year, 'volume': self.volume, 'series': self.series, 'address': self.address,
-                            'note': self.note, 'isbn': self.isbn, 'link': self.link, 'adjust': self.adjust})
+        c.execute(pub_sql, {'pubkey': self.pubkey, 'author': self.bib.get('author'), 'title': self.bib.get('title'),
+                            'abbr': self.abbr, 'edition': self.bib.get('edition'),
+                            'publisher': self.bib.get('publisher'), 'month': self.bib.get('month'),
+                            'year': self.bib.get('year'), 'volume': self.bib.get('volume'),
+                            'series': self.bib.get('series'), 'address': self.bib.get('address'),
+                            'note': self.bib.get('note'), 'isbn': self.bib.get('isbn'), 'link': self.link,
+                            'adjust': self.adjust})
         pub_rows = c.rowcount
         con.commit()
         index_sql = "INSERT {conflict} INTO indices (pubkey, version, entry, idx, idx_text, page, notes) " \

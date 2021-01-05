@@ -2,7 +2,48 @@
 import argparse
 import os
 import json
+import bibtexparser
+from bibtexparser.bwriter import BibTexWriter
+from bibtexparser.bibdatabase import BibDatabase
+
+# local
 from classes import Index
+
+
+def write_bib(bib, out_file):
+    db = BibDatabase()
+    db.entries = [bib]
+    writer = BibTexWriter()
+    with open(out_file, 'w') as bibfile:
+        bibfile.write(writer.write(db))
+
+
+def read_bib(bib_path, arg_bib):
+    with open(bib_path) as bibtex_file:
+        bib_database = bibtexparser.load(bibtex_file)
+    new_bib = bib_database.entries[0]
+    combine_bib = dict()
+    for key, value in new_bib.items():
+        if arg_bib.get(key):
+            write_value = arg_bib.get(key)
+        else:
+            write_value = value
+        combine_bib[key] = write_value
+    for key, value in arg_bib.items():
+        if not new_bib.get(key):
+            combine_bib[key] = value
+    # to cover some idiosyncratic differences in BibTeX entry types with our class
+    if combine_bib.get('year'):
+        try:
+            combine_bib['year'] = int(combine_bib['year'])
+        except ValueError:
+            combine_bib['year'] = None
+    if combine_bib.get('edition'):
+        try:
+            combine_bib['edition'] = float(combine_bib['edition'])
+        except ValueError:
+            combine_bib['edition'] = None
+    return combine_bib
 
 
 if __name__ == "__main__":
@@ -36,6 +77,14 @@ if __name__ == "__main__":
                              'the record insert.')
 
     # bibTeX options
+    parser.add_argument('-b', '--write_bib', help="Path at which to create a BibTeX .bib file to store for the index "
+                                                  "source.")
+    parser.add_argument('-B', '--load_bib', help="Path to a BibTeX .bib file which stores bibliography info for the "
+                                                 "index source.")
+    parser.add_argument('-e', '--entry_type', default='misc',
+                        help="The type for the index source. Choices are BibTeX style.",
+                        choices=['article', 'book', 'booklet', 'inbook', 'incollection', 'inproceedings', 'manual',
+                                 'mastersthesis', 'misc', 'phdthesis', 'proceedings', 'techreport', 'unpublished'])
     parser.add_argument('--author', help="The author(s) of the text")
     parser.add_argument('--title', help="The full title of the text the index references (e.g. Player's Handbook)")
     parser.add_argument('--edition', type=float, help="The numerical edition of the text (e.g. 1, 3.5)")
@@ -50,11 +99,28 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    bib_dict = {
+        'author': args.author,
+        'title': args.title,
+        'edition': args.edition,
+        'publisher': args.publisher,
+        'month': args.month,
+        'year': args.year,
+        'volume': args.volume,
+        'series': args.series,
+        'address': args.address,
+        'note': args.note,
+        'isbn': args.isbn,
+        'ENTRYTYPE': args.entry_type,
+        'ID': args.pubkey
+    }
+
+    if args.load_bib:
+        bib_dict = read_bib(bib_path=args.load_bib, arg_bib=bib_dict)
+
     my_index = Index(path=args.path, dbpath=args.out_file, delimiter=args.index_delimiter, pubkey=args.pubkey,
                      abbr=args.abbr, link=args.link, adjust=args.page_adjust, conflict=args.conflict,
-                     version=args.version, author=args.author, title=args.title, publisher=args.publisher,
-                     year=args.year, volume=args.volume, series=args.series, address=args.address, edition=args.edition,
-                     month=args.month, note=args.note, isbn=args.isbn)
+                     version=args.version, bib=bib_dict)
     my_index.text_to_dict()
     if os.path.splitext(args.out_file)[1] == '.json':
         my_index.dict_to_tree()
@@ -68,4 +134,7 @@ if __name__ == "__main__":
         my_index.dict_to_df()
         my_index.df_index.to_csv(args.out_file, sep=args.delim, index=False)
 
+    if args.write_bib:
+        strip_dict = {k: str(v) for k, v in bib_dict.items() if v}
+        write_bib(bib=strip_dict, out_file=args.write_bib)
     print('Script finished.')
