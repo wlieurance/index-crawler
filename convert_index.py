@@ -11,8 +11,19 @@ from classes import Index
 
 
 def write_bib(bib, out_file):
+    if os.path.isfile(out_file):
+        with open(out_file) as bibtex_read:
+            bib_database = bibtexparser.load(bibtex_read)
+        read_dict = bib_database.entries
+        if bib['ID'] in [x['ID'] for x in read_dict]:
+            new_dict = [x for x in read_dict if x['ID'] != bib['ID']]
+            new_dict.append(bib)
+        else:
+            new_dict = [bib]
+    else:
+        new_dict = [bib]
     db = BibDatabase()
-    db.entries = [bib]
+    db.entries = new_dict
     writer = BibTexWriter()
     with open(out_file, 'w') as bibfile:
         bibfile.write(writer.write(db))
