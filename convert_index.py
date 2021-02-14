@@ -19,7 +19,8 @@ def write_bib(bib, out_file):
             new_dict = [x for x in read_dict if x['ID'] != bib['ID']]
             new_dict.append(bib)
         else:
-            new_dict = [bib]
+            new_dict = read_dict.copy()
+            new_dict.append(bib)
     else:
         new_dict = [bib]
     db = BibDatabase()
@@ -103,7 +104,7 @@ if __name__ == "__main__":
     parser.add_argument('--bib_id', help="The BibTeX id of the entry for reading/writing to .bib files.")
     parser.add_argument('--author', help="The author(s) of the text")
     parser.add_argument('--title', help="The full title of the text the index references (e.g. Player's Handbook)")
-    parser.add_argument('--edition', type=float, help="The numerical edition of the text (e.g. 1, 3.5)")
+    parser.add_argument('--edition', help="The numerical edition of the text (e.g. 1, 3.5)")
     parser.add_argument('--publisher', help="The name of the publisher of the text.")
     parser.add_argument('--month', help="The month of publication of this edition.")
     parser.add_argument('--year', type=int, help="The year the text of this edition was published.")

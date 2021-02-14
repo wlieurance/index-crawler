@@ -10,6 +10,7 @@ from tkinter import *
 from tkinter.ttk import *
 import subprocess
 import json
+import shlex
 
 
 class Index:
@@ -258,12 +259,7 @@ class ExportForm:
 
         with open(os.path.join(scrptdir, 'pdf_options.json'), 'r') as f:
             pdf_options = json.load(f)
-        self.pdf = None
-        for i in pdf_options:
-            if os.path.isfile(i['readerpath']):
-                self.pdf = i
-            else:
-                break
+        self.pdf = pdf_options[0]
         print('pdf options:', self.pdf)
 
         # self.path_to_reader = os.path.abspath(r'/usr/bin/evince')
@@ -520,12 +516,10 @@ class ExportForm:
                 pdf_path = rec[0]
                 pg += int(rec[1])
             if self.pdf and pdf_path:
-                pinput = [self.pdf['readerpath']]
-                if self.pdf['options'] is not None:
-                    pinput += [x for x in self.pdf['options'] if x is not None]
-                pinput += [self.pdf['page'].format(str(pg))] + [os.path.abspath(pdf_path)]
-                print(pinput)
-                process = subprocess.Popen(pinput, shell=False,  stdout=subprocess.PIPE)
+                command = self.pdf['command'].format(page=str(pg), path=pdf_path)
+                print(command)
+                cmd_list = shlex.split(command)
+                process = subprocess.Popen(cmd_list, shell=False,  stdout=subprocess.PIPE)
 
         # callback actions if text boxes have been altered
         def callback_pub(sv):
