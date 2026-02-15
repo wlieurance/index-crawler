@@ -65,7 +65,7 @@ class Index:
             new_d['idx_text'] = self.idx_dict_to_text(idx=d['idx_text'], delim=self.delimiter)
             new_d['page'] = d['p']
             new_d['notes'] = d['note']
-            self.df_index = self.df_index.append(new_d, ignore_index=True)
+            self.df_index = pd.concat([self.df_index, pd.DataFrame([new_d])], ignore_index=True)
         if self.version:
             self.df_index.insert(0, 'version', self.version)
         if self.pubkey:
