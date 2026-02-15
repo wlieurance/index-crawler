@@ -3,16 +3,20 @@ import tkinter
 import os
 import sqlite3 as sqlite
 import argparse
+from pathlib import Path
 
 # local
 from classes import ExportForm
 
 if __name__ == "__main__":
     # parses script arguments
+    script_dir = Path(__file__).resolve().parent
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-                                     description='Creates a Tkinter window to search indices in a database format.')
-    parser.add_argument('-d', '--dbpath', help='The file path to the database file created with convert_index.py '
-                        'or via the "Index" class in classes.py')
+                                     description='Creates a Tkinter window to search indices in a '
+                                                 'database format.')
+    parser.add_argument('-d', '--dbpath',
+                        help='The file path to the database file created with convert_index.py '
+                             'or via the "Index" class in classes.py')
     args = parser.parse_args()
 
     try:
@@ -28,7 +32,8 @@ if __name__ == "__main__":
     conn = sqlite.connect(dbpath)
     root = tkinter.Tk()
     root.title("Index Crawler")
-    icon = tkinter.PhotoImage(file='icon.png')
+    icon_path = script_dir / "icon.png"
+    icon = tkinter.PhotoImage(file=icon_path)
     root.iconphoto(False, icon)
     mf = ExportForm(root, conn, scrptdir)
     root.mainloop()
